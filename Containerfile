@@ -1,4 +1,5 @@
-FROM debian:stable-slim
+#FROM quay,io/rafael_palomar/emacs-portable ---
+FROM quay.io/rafael_palomar/taskwarrior-portable
 
 LABEL com.github.containers.toolbox="true" \
     usage="This image is meant to be used with the toolbox or distrobox command" \
@@ -18,6 +19,7 @@ RUN apt-get update && \
     gnupg2 \
     isync \
     isync \
+    khard \
     libcurl4-openssl-dev \
     libgpgme-dev \
     libidn2-0-dev \
@@ -96,8 +98,8 @@ RUN install /usr/local/share/neomutt/oauth2/mutt_oauth2.py /usr/bin
 # Clean up to reduce image size
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
-RUN cp  /usr/share/applications/neomutt.desktop \
-        /usr/share/applications/neomutt-portable.desktop
+#COPY .desktop file
+COPY neomutt-portable.desktop /usr/share/applications
 
 # Verify NeoMutt installation and features
 RUN neomutt -v
